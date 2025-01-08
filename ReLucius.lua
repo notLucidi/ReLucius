@@ -35,6 +35,23 @@ end)
 end
 })
 
+PlayerSection:AddButton({
+	Name = "Auto Farm Chest",
+	Callback = function()
+			local ChestFolder = game.Workspace.World.Chests
+			local player = game.Players.LocalPlayer
+			local character = player.Character or player.CharacterAdded:Wait()
+			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+			for _, chest in ipairs(ChestFolder:GetChildren()) do
+				if chest:IsA("BasePart") and chest.Name:match("^Chest%d+$") then
+						humanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 3, 0)
+					wait(1.5)
+				end
+			end
+		end
+	})
+
 --Player Tab End--
 
 --Settings Tab--
