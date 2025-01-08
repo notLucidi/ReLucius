@@ -8,7 +8,7 @@ OrionLib:MakeNotification({
 })
 
 
-local Window = OrionLib:MakeWindow({Name = "Orion Example", HidePremium = false, SaveConfig = true, ConfigFolder = "Orion"})
+local Window = OrionLib:MakeWindow({Name = "ReLucius", HidePremium = false, SaveConfig = true, ConfigFolder = "ReConfig", IntroText = "ReLucius"})
 
 --Player Tab--
 
@@ -19,21 +19,20 @@ local PlayerTab = Window:MakeTab({
 })
 
 local PlayerSection = PlayerTab:AddSection({
-	Name = "Player"
+	Name = "Main"
 })
 
+PlayerSection:AddButton({
+	Name = "Infinite Energy (Exploit)",
+	Callback = function()
+local Energy = game.workspace.Characters.Velmoras.CharcterStats.Energy
 
-PlayerSection:AddSlider({
-	Name = "Walkspeed",
-	Min = 16,
-	Max = 100,
-	Default = 5,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "Walkspeed",
-	Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-	end    
+Energy.Changed:Connect(function(EnergyUpdate)
+	if Energy.Value < 99 then
+		Energy.Value = 9999
+	end	
+end)
+end
 })
 
 --Player Tab End--
