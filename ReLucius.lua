@@ -23,19 +23,35 @@ local PlayerSection = PlayerTab:AddSection({
 })
 
 
-PlayerSection:AddSlider({
-	Name = "Walkspeed",
-	Min = 16,
-	Max = 100,
-	Default = 5,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "Walkspeed",
-	Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-	end    
+PlayerSection:AddButton({
+	Name = "Infinite Energy (Exploit)",
+	Callback = function()
+local Energy = game.workspace.Characters.Velmoras.CharcterStats.Energy
+
+Energy.Changed:Connect(function(EnergyUpdate)
+	if Energy.Value < 99 then
+		Energy.Value = 9999
+	end	
+end)
+end
 })
 
+PlayerSection:AddButton({
+	Name = "Auto Farm Chest",
+	Callback = function()
+local ChestFolder = game.Workspace.World.Chests
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+for _, chest in ipairs(ChestFolder:GetChildren()) do
+	if chest:IsA("BasePart") and chest.Name:match("^Chest%d+$") then
+		humanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 3, 0)
+		wait(1.5)
+			end
+		end
+end
+})
 --Player Tab End--
 
 --Settings Tab--
