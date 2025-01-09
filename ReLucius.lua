@@ -1,6 +1,6 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-OrionLib:MakeNotification({
+lib:MakeNotification({
 	Name = "Orion Example",
 	Content = "Orion Example",
 	Image = "rbxassetid://4483345998",
@@ -8,7 +8,7 @@ OrionLib:MakeNotification({
 })
 
 
-local Window = OrionLib:MakeWindow({Name = "Orion Example", HidePremium = false, SaveConfig = true, ConfigFolder = "Orion"})
+local Window = lib:MakeWindow({Name = "ReLucius | v1 | discord.gg/ReLucius", HidePremium = false, SaveConfig = true, ConfigFolder = "Config", IntroText = "ReLucius v1"})
 
 --Player Tab--
 
@@ -24,34 +24,40 @@ local PlayerSection = PlayerTab:AddSection({
 
 
 PlayerSection:AddButton({
-	Name = "Infinite Energy (Exploit)",
-	Callback = function()
-local Energy = game.workspace.Characters.Velmoras.CharcterStats.Energy
-
-Energy.Changed:Connect(function(EnergyUpdate)
-	if Energy.Value < 99 then
-		Energy.Value = 9999
-	end	
-end)
-end
+    Name = "Infinite Energy",
+    Callback = function()
+        local Players = game:GetService("Players")
+        local Player = Players.LocalPlayer
+        local Characters = game.workspace.Characters:FindFirstChild(Player.Name)
+        
+        if Characters then
+            local Energy = Characters.CharcterStats.Energy
+            Energy.Changed:Connect(function()
+            if Energy.Value < 99 then
+                Energy.Value = 9999
+            end
+            end)
+        end
+    end
 })
 
 PlayerSection:AddButton({
-	Name = "Auto Farm Chest",
-	Callback = function()
-local ChestFolder = game.Workspace.World.Chests
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    Name = "Auto Farm Chest"
+    Callback = function()
+        local ChestFolder = game.workspace.World.Chests
+        local Player = game.Players.LocalPlayer
+        local Characters = Player.Character and Player.CharacterAdd:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-for _, chest in ipairs(ChestFolder:GetChildren()) do
-	if chest:IsA("BasePart") and chest.Name:match("^Chest%d+$") then
-		humanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 3, 0)
-		wait(1.5)
-			end
-		end
-end
+        for _, chest in ipairs(ChestFolder:GetChildren()) do
+            if chest:IsA("BasePart") and chest.Name:Match("^Chest&d+$") then
+                humanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 3, 0)
+                wait(1.5)
+            end
+        end
+    end
 })
+
 --Player Tab End--
 
 --Settings Tab--
